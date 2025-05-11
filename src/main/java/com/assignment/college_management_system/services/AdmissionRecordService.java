@@ -4,6 +4,7 @@ import com.assignment.college_management_system.entities.AdmissionRecordEntity;
 import com.assignment.college_management_system.entities.StudentEntity;
 import com.assignment.college_management_system.repositories.AdmissionRecordRepository;
 import com.assignment.college_management_system.repositories.StudentRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,5 +32,9 @@ public class AdmissionRecordService {
 
     public AdmissionRecordEntity saveAdmissionRecord(AdmissionRecordEntity admissionRecordEntity) {
         return admissionRecordRepository.save(admissionRecordEntity);
+    }
+
+    public AdmissionRecordEntity admissionRecordId(Long admissionRecordId) {
+        return admissionRecordRepository.findById(admissionRecordId).orElseThrow();
     }
 }

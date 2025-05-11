@@ -16,6 +16,11 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @GetMapping(path = "/{studentId}")
+    public ResponseEntity<StudentEntity> getStudentById(@PathVariable Long studentId) {
+        return new ResponseEntity<>(studentService.getStudentById(studentId), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<StudentEntity> saveStudent(@RequestBody StudentEntity studentEntity) {
         return new ResponseEntity<>(studentService.saveStudent(studentEntity), HttpStatus.OK);

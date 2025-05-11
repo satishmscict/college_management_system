@@ -19,7 +19,13 @@ public class AdmissionRecordController {
         this.studentService = studentService;
     }
 
-    @PostMapping(path = "/{admissionRecordId}/student/{studentId}")
+
+    @GetMapping(path = "/{admissionRecordId}")
+    public ResponseEntity<AdmissionRecordEntity> getAdmissionRecordById(@PathVariable Long admissionRecordId) {
+        return new ResponseEntity<>(admissionRecordService.admissionRecordId(admissionRecordId), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/{admissionRecordId}/student/{studentId}")
     public ResponseEntity<AdmissionRecordEntity> assignAdmissionRecordToStudent(
             @PathVariable Long admissionRecordId,
             @PathVariable Long studentId
