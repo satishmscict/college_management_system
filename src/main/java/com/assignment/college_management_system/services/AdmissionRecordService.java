@@ -1,30 +1,37 @@
 package com.assignment.college_management_system.services;
 
+import com.assignment.college_management_system.dtos.AdmissionRecordDTO;
 import com.assignment.college_management_system.entities.AdmissionRecordEntity;
 import com.assignment.college_management_system.entities.StudentEntity;
 import com.assignment.college_management_system.repositories.AdmissionRecordRepository;
 import com.assignment.college_management_system.repositories.StudentRepository;
 import com.assignment.college_management_system.utils.ValidationUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AdmissionRecordService {
 
     private final AdmissionRecordRepository admissionRecordRepository;
+    private ModelMapper modelMapper;
     private final StudentRepository studentRepository;
     private final ValidationUtils validationUtils;
 
     public AdmissionRecordService(
             AdmissionRecordRepository admissionRecordRepository,
+            ModelMapper modelMapper,
             StudentRepository studentRepository,
             ValidationUtils validationUtils
     ) {
         this.admissionRecordRepository = admissionRecordRepository;
+        this.modelMapper = modelMapper;
         this.studentRepository = studentRepository;
         this.validationUtils = validationUtils;
     }
 
-    public AdmissionRecordEntity assignAdmissionRecordToStudent(Long admissionRecordId, Long studentId) {
+    public AdmissionRecordDTO assignAdmissionRecordToStudent(Long admissionRecordId, Long studentId) {
         StudentEntity studentEntity = studentRepository.findById(studentId).orElse(null);
         validationUtils.checkIsResourceExistOrThrow(
                 studentEntity != null,
@@ -39,19 +46,27 @@ public class AdmissionRecordService {
 
         admissionRecordEntity.setStudentEntity(studentEntity);
 
-        return admissionRecordRepository.save(admissionRecordEntity);
+        AdmissionRecordEntity updatedAdmissionRecordEntity = admissionRecordRepository.save(admissionRecordEntity);
+
+        return modelMapper.map(updatedAdmissionRecordEntity, AdmissionRecordDTO.class);
     }
 
-    public AdmissionRecordEntity saveAdmissionRecord(AdmissionRecordEntity admissionRecordEntity) {
-        return admissionRecordRepository.save(admissionRecordEntity);
+    public AdmissionRecordDTO saveAdmissionRecord(AdmissionRecordDTO admissionRecordDTO) {
+
+        AdmissionRecordEntity admissionRecordEntity = modelMapper.map(admissionRecordDTO, AdmissionRecordEntity.class);
+        AdmissionRecordEntity updateAdmissionRecordEntity = admissionRecordRepository.save(admissionRecordEntity);
+
+        return modelMapper.map(updateAdmissionRecordEntity, AdmissionRecordDTO.class);
     }
 
-    public AdmissionRecordEntity getAdmissionRecordById(Long admissionRecordId) {
+    public AdmissionRecordDTO getAdmissionRecordById(Long admissionRecordId) {
         validationUtils.checkIsResourceExistOrThrow(
                 admissionRecordRepository.existsById(admissionRecordId),
                 "Admission record not available with the id: " + admissionRecordId
         );
 
-        return admissionRecordRepository.findById(admissionRecordId).orElseThrow();
+        Optional<AdmissionRecordEntity> admissionRecordEntity = admissionRecordRepository.findById(admissionRecordId);
+
+        return modelMapper.map(admissionRecordEntity, AdmissionRecordDTO.class);
     }
 }

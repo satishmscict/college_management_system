@@ -19,14 +19,11 @@ public class StudentController {
 
     @GetMapping(path = "/{studentId}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId) {
-        StudentDTO studentDTO = studentService.getStudentById(studentId);
-
-        return new ResponseEntity<>(studentDTO, HttpStatus.OK);
+        return ResponseEntity.ok(studentService.getStudentById(studentId));
     }
 
     @PostMapping
     public ResponseEntity<StudentDTO> saveStudent(@RequestBody @Valid StudentDTO studentDTO) {
-
-        return new ResponseEntity<>(studentService.saveStudent(studentDTO), HttpStatus.OK);
+        return ResponseEntity.ok(studentService.saveStudent(studentDTO));
     }
 }

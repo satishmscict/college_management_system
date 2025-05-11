@@ -1,9 +1,9 @@
 package com.assignment.college_management_system.controllers;
 
-import com.assignment.college_management_system.entities.AdmissionRecordEntity;
+import com.assignment.college_management_system.dtos.AdmissionRecordDTO;
 import com.assignment.college_management_system.services.AdmissionRecordService;
 import com.assignment.college_management_system.services.StudentService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,26 +19,21 @@ public class AdmissionRecordController {
         this.studentService = studentService;
     }
 
-
-    @GetMapping(path = "/{admissionRecordId}")
-    public ResponseEntity<AdmissionRecordEntity> getAdmissionRecordById(@PathVariable Long admissionRecordId) {
-        return new ResponseEntity<>(admissionRecordService.getAdmissionRecordById(admissionRecordId), HttpStatus.OK);
-    }
-
     @PutMapping(path = "/{admissionRecordId}/student/{studentId}")
-    public ResponseEntity<AdmissionRecordEntity> assignAdmissionRecordToStudent(
+    public ResponseEntity<AdmissionRecordDTO> assignAdmissionRecordToStudent(
             @PathVariable Long admissionRecordId,
             @PathVariable Long studentId
     ) {
+        return ResponseEntity.ok(admissionRecordService.assignAdmissionRecordToStudent(admissionRecordId, studentId));
+    }
 
-        AdmissionRecordEntity admissionRecordEntity = admissionRecordService.assignAdmissionRecordToStudent(admissionRecordId, studentId);
-
-        return new ResponseEntity<>(admissionRecordEntity, HttpStatus.OK);
+    @GetMapping(path = "/{admissionRecordId}")
+    public ResponseEntity<AdmissionRecordDTO> getAdmissionRecordById(@PathVariable Long admissionRecordId) {
+        return ResponseEntity.ok(admissionRecordService.getAdmissionRecordById(admissionRecordId));
     }
 
     @PostMapping
-    public ResponseEntity<AdmissionRecordEntity> saveAdmissionRecord(@RequestBody AdmissionRecordEntity admissionRecordEntity) {
-        AdmissionRecordEntity admissionRecord = admissionRecordService.saveAdmissionRecord(admissionRecordEntity);
-        return ResponseEntity.ok(admissionRecord);
+    public ResponseEntity<AdmissionRecordDTO> saveAdmissionRecord(@RequestBody @Valid AdmissionRecordDTO admissionRecordDTO) {
+        return ResponseEntity.ok(admissionRecordService.saveAdmissionRecord(admissionRecordDTO));
     }
 }
