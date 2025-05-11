@@ -1,7 +1,8 @@
 package com.assignment.college_management_system.controllers;
 
-import com.assignment.college_management_system.entities.StudentEntity;
+import com.assignment.college_management_system.dtos.StudentDTO;
 import com.assignment.college_management_system.services.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,15 @@ public class StudentController {
     }
 
     @GetMapping(path = "/{studentId}")
-    public ResponseEntity<StudentEntity> getStudentById(@PathVariable Long studentId) {
-        return new ResponseEntity<>(studentService.getStudentById(studentId), HttpStatus.OK);
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId) {
+        StudentDTO studentDTO = studentService.getStudentById(studentId);
+
+        return new ResponseEntity<>(studentDTO, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<StudentEntity> saveStudent(@RequestBody StudentEntity studentEntity) {
-        return new ResponseEntity<>(studentService.saveStudent(studentEntity), HttpStatus.OK);
+    public ResponseEntity<StudentDTO> saveStudent(@RequestBody @Valid StudentDTO studentDTO) {
+
+        return new ResponseEntity<>(studentService.saveStudent(studentDTO), HttpStatus.OK);
     }
 }

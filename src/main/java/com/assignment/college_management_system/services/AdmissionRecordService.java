@@ -2,9 +2,9 @@ package com.assignment.college_management_system.services;
 
 import com.assignment.college_management_system.entities.AdmissionRecordEntity;
 import com.assignment.college_management_system.entities.StudentEntity;
+import com.assignment.college_management_system.exceptions.ResourceNotFoundException;
 import com.assignment.college_management_system.repositories.AdmissionRecordRepository;
 import com.assignment.college_management_system.repositories.StudentRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,15 +18,15 @@ public class AdmissionRecordService {
         this.studentRepository = studentRepository;
     }
 
-    public AdmissionRecordEntity assignAdmissionRecordToStudent(Long admissionRecordId, Long studentId) throws Exception {
+    public AdmissionRecordEntity assignAdmissionRecordToStudent(Long admissionRecordId, Long studentId) {
         StudentEntity studentEntity = studentRepository.findById(studentId).orElse(null);
-        AdmissionRecordEntity admissionRecordEntity = admissionRecordRepository.findById(admissionRecordId).orElse(null);
+        checkIsEntityExistOrThrow(studentEntity == null, "Student not available with the id: " + studentId);
 
-        if (studentEntity == null || admissionRecordEntity == null) {
-            throw new Exception("Student or Admission record data not available.");
-        }
+        AdmissionRecordEntity admissionRecordEntity = admissionRecordRepository.findById(admissionRecordId).orElse(null);
+        checkIsEntityExistOrThrow(admissionRecordEntity == null, "Admission record not available with the id: " + studentId);
 
         admissionRecordEntity.setStudentEntity(studentEntity);
+
         return admissionRecordRepository.save(admissionRecordEntity);
     }
 
@@ -34,7 +34,15 @@ public class AdmissionRecordService {
         return admissionRecordRepository.save(admissionRecordEntity);
     }
 
-    public AdmissionRecordEntity admissionRecordId(Long admissionRecordId) {
+    public AdmissionRecordEntity getAdmissionRecordById(Long admissionRecordId) {
+        checkIsEntityExistOrThrow(!admissionRecordRepository.existsById(admissionRecordId), "Admission record not available with the id: " + admissionRecordId);
+
         return admissionRecordRepository.findById(admissionRecordId).orElseThrow();
+    }
+
+    private void checkIsEntityExistOrThrow(Boolean isRecordNotExist, String message) {
+        if (isRecordNotExist) {
+            throw new ResourceNotFoundException(message);
+        }
     }
 }

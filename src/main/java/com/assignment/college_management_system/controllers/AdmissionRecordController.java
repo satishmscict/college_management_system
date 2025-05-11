@@ -22,14 +22,14 @@ public class AdmissionRecordController {
 
     @GetMapping(path = "/{admissionRecordId}")
     public ResponseEntity<AdmissionRecordEntity> getAdmissionRecordById(@PathVariable Long admissionRecordId) {
-        return new ResponseEntity<>(admissionRecordService.admissionRecordId(admissionRecordId), HttpStatus.OK);
+        return new ResponseEntity<>(admissionRecordService.getAdmissionRecordById(admissionRecordId), HttpStatus.OK);
     }
 
     @PutMapping(path = "/{admissionRecordId}/student/{studentId}")
     public ResponseEntity<AdmissionRecordEntity> assignAdmissionRecordToStudent(
             @PathVariable Long admissionRecordId,
             @PathVariable Long studentId
-    ) throws Exception {
+    ) {
 
         AdmissionRecordEntity admissionRecordEntity = admissionRecordService.assignAdmissionRecordToStudent(admissionRecordId, studentId);
 
