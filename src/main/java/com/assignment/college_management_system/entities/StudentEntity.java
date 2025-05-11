@@ -1,5 +1,6 @@
 package com.assignment.college_management_system.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,11 +11,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "student")
+@NoArgsConstructor
 public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @OneToOne(mappedBy = "studentEntity")
+    @JsonIgnore
+    private AdmissionRecordEntity admissionRecord;
 }
