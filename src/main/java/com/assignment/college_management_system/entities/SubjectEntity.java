@@ -1,5 +1,6 @@
 package com.assignment.college_management_system.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,4 +20,9 @@ public class SubjectEntity {
     private Long id;
 
     private String name;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "professor_id")
+    @JsonIgnore
+    private ProfessorEntity professor;
 }

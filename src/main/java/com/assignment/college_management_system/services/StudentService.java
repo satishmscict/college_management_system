@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 public class StudentService {
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final StudentRepository studentRepository;
     private final ValidationUtils validationUtils;
 

@@ -15,7 +15,7 @@ import java.util.Optional;
 public class AdmissionRecordService {
 
     private final AdmissionRecordRepository admissionRecordRepository;
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final StudentRepository studentRepository;
     private final ValidationUtils validationUtils;
 
