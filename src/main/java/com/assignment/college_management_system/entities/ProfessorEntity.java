@@ -1,8 +1,21 @@
 package com.assignment.college_management_system.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,10 +36,6 @@ public class ProfessorEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "professor")
-    @JsonIgnore
-    private List<SubjectEntity> subjectList;
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -46,4 +55,8 @@ public class ProfessorEntity {
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
     private Set<StudentEntity> students;
+
+    @OneToMany(mappedBy = "professor")
+    @JsonIgnore
+    private List<SubjectEntity> subjectList;
 }
