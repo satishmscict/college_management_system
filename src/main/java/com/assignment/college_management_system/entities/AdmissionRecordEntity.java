@@ -22,5 +22,5 @@ public class AdmissionRecordEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
-    private StudentEntity studentEntity;
+    private StudentEntity student;
 }

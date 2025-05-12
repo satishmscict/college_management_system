@@ -1,6 +1,7 @@
 package com.assignment.college_management_system.dtos;
 
 import com.assignment.college_management_system.entities.ProfessorEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,5 +19,6 @@ public class SubjectDTO {
     @NotBlank(message = "Subject name is required.")
     private String name;
 
-    private ProfessorEntity professor;
+    @JsonIgnore
+    private ProfessorDTO professor;
 }

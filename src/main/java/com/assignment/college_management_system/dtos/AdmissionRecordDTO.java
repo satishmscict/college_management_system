@@ -1,6 +1,5 @@
 package com.assignment.college_management_system.dtos;
 
-import com.assignment.college_management_system.entities.StudentEntity;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -17,5 +16,5 @@ public class AdmissionRecordDTO {
     @DecimalMax(value = "100000.00", message = "Employee maximum salary should not exceed the 99999.99")
     private Double fees;
 
-    private StudentEntity studentEntity;
+    private StudentDTO student;
 }

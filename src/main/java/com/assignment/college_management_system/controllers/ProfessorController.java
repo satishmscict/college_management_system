@@ -22,7 +22,15 @@ public class ProfessorController {
     }
 
     @GetMapping(path = "/{professorId}")
-    public ResponseEntity<ProfessorDTO> getProfessorById(@PathVariable Long professorId){
+    public ResponseEntity<ProfessorDTO> getProfessorById(@PathVariable Long professorId) {
         return ResponseEntity.ok(professorService.getProfessorById(professorId));
+    }
+
+    @PutMapping(path = "/{professorId}/student/{studentId}")
+    private ResponseEntity<ProfessorDTO> assignProfessorToStudent(
+            @PathVariable Long professorId,
+            @PathVariable Long studentId
+    ) throws Exception {
+        return ResponseEntity.ok(professorService.assignProfessorToStudent(professorId, studentId));
     }
 }

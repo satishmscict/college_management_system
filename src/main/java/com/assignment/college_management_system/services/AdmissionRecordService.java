@@ -44,7 +44,7 @@ public class AdmissionRecordService {
                 "Admission record not available with the id: " + admissionRecordId
         );
 
-        admissionRecordEntity.setStudentEntity(studentEntity);
+        admissionRecordEntity.setStudent(studentEntity);
 
         AdmissionRecordEntity updatedAdmissionRecordEntity = admissionRecordRepository.save(admissionRecordEntity);
 
