@@ -6,8 +6,9 @@
 
 ### 🧪 **Environment**
 
-* **Java Version**: 21
 * **IDE**: IntelliJ IDEA 2025.1 (Community Edition)
+* **Java Version**: 21
+* **MySql Version**: 9.3.0 for macos15.2 on arm64 (Homebrew)
 
 ---
 
@@ -39,3 +40,9 @@
 
     * Implement CRUD operations for all entities.
     * Use **Spring MVC architecture** to structure the application.
+
+---
+
+### ✅ **Database Diagram**
+
+![img.png](img.png)

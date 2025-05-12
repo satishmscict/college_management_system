@@ -19,4 +19,6 @@ public class StudentDTO {
     private String name;
 
     private Set<ProfessorDTO> professor;
+
+  //  private Set<SubjectDTO> subjects;
 }

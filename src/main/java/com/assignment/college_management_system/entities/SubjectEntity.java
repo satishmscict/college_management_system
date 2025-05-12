@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @Builder
 @Data
@@ -25,4 +27,7 @@ public class SubjectEntity {
     @JoinColumn(name = "professor_id")
     @JsonIgnore
     private ProfessorEntity professor;
+
+    @ManyToMany(mappedBy = "subjects")
+    private Set<StudentEntity> students;
 }

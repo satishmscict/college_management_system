@@ -26,4 +26,12 @@ public class StudentController {
     public ResponseEntity<StudentDTO> saveStudent(@RequestBody @Valid StudentDTO studentDTO) {
         return ResponseEntity.ok(studentService.saveStudent(studentDTO));
     }
+
+    @PutMapping(path = "/{studentId}/subject/{subjectId}")
+    public ResponseEntity<StudentDTO> assignStudentToSubject(
+            @PathVariable Long studentId,
+            @PathVariable Long subjectId
+    ) {
+        return ResponseEntity.ok(studentService.assignStudentToSubject(studentId, subjectId));
+    }
 }
