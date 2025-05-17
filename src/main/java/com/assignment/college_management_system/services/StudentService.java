@@ -9,7 +9,9 @@ import com.assignment.college_management_system.utils.ValidationUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -58,5 +60,14 @@ public class StudentService {
     private StudentEntity updateStudentWithSubjectId(StudentEntity studentEntity, SubjectEntity subjectEntity) {
         studentEntity.getSubjects().add(subjectEntity);
         return studentRepository.save(studentEntity);
+    }
+
+    public List<StudentDTO> getAllStudents() {
+        return studentRepository
+                .findAll()
+                .stream()
+                .map(studentEntity -> modelMapper.map(studentEntity, StudentDTO.class))
+                .collect(Collectors.toList());
+
     }
 }
