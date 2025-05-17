@@ -3,7 +3,6 @@ package com.assignment.college_management_system.controllers;
 import com.assignment.college_management_system.dtos.StudentDTO;
 import com.assignment.college_management_system.services.StudentService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
