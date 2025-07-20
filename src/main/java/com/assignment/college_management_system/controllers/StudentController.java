@@ -3,29 +3,32 @@ package com.assignment.college_management_system.controllers;
 import com.assignment.college_management_system.dtos.StudentDTO;
 import com.assignment.college_management_system.services.StudentService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/students/v1")
+@RequestMapping("/api/v1/students")
 public class StudentController {
 
-    StudentService studentService;
-
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
+    private final StudentService studentService;
 
     @GetMapping
     public ResponseEntity<List<StudentDTO>> getAllStudents(){
     return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @GetMapping(path = "/{studentId}")
+    @GetMapping(path = "/studentId/{studentId}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId) {
         return ResponseEntity.ok(studentService.getStudentById(studentId));
+    }
+
+    @GetMapping(path = "/studentName/{studentName}")
+    public ResponseEntity<StudentDTO> getStudentByName(@PathVariable String studentName) {
+        return ResponseEntity.ok(studentService.findStudentByName(studentName));
     }
 
     @PostMapping
@@ -33,7 +36,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.saveStudent(studentDTO));
     }
 
-    @PutMapping(path = "/{studentId}/subject/{subjectId}")
+    @PutMapping(path = "/studentId/{studentId}/subjectId/{subjectId}")
     public ResponseEntity<StudentDTO> assignStudentToSubject(
             @PathVariable Long studentId,
             @PathVariable Long subjectId
