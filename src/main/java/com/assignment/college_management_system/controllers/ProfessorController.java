@@ -2,6 +2,7 @@ package com.assignment.college_management_system.controllers;
 
 import com.assignment.college_management_system.dtos.ProfessorDTO;
 import com.assignment.college_management_system.services.ProfessorService;
+import com.assignment.college_management_system.services.ProfessorServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ public class ProfessorController {
 
     private final ProfessorService professorService;
 
-    public ProfessorController(ProfessorService professorService) {
+    public ProfessorController(ProfessorServiceImpl professorService) {
         this.professorService = professorService;
     }
 
