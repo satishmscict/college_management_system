@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
 
         Optional<StudentEntity> studentEntity = studentRepository.findByName(name);
         if(studentEntity.isEmpty()){
-            throw  new ResourceNotFoundException("Student not found with the name: "+name);
+            throw new ResourceNotFoundException("Student not found with the name: "+name);
         }
         return modelMapper.map(studentEntity, StudentDTO.class);
     }

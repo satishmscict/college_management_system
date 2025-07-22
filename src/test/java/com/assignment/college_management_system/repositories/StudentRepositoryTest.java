@@ -2,7 +2,6 @@ package com.assignment.college_management_system.repositories;
 
 import com.assignment.college_management_system.JpaTestContainerConfiguration;
 import com.assignment.college_management_system.entities.StudentEntity;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
