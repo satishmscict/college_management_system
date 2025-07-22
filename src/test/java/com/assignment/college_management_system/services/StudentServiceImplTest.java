@@ -26,8 +26,7 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Import(JpaTestContainerConfiguration.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -77,27 +76,32 @@ class StudentServiceImplTest {
     @Test
     void testAssignStudentToSubject_whenStudentAndSubjectExist_thenSaveAndReturnStudent() {
         // Arrange
+        String studentName = "Dhruva";
+        String subjectName = "OS";
         StudentEntity mockedStudent = mock(StudentEntity.class);
         SubjectEntity mockedSubject = mock(SubjectEntity.class);
-
-        when(mockedSubjectRepository.findById(anyLong())).thenReturn(Optional.of(mockedSubject));
 
         // Set up a mutable collection for subjects
         Set<SubjectEntity> subjects = new HashSet<>();
         when(mockedStudent.getSubjects()).thenReturn(subjects);
 
+        when(mockedSubjectRepository.findById(anyLong())).thenReturn(Optional.of(mockedSubject));
         when(mockedStudentRepository.findById(anyLong())).thenReturn(Optional.of(mockedStudent));
         when(mockedStudentRepository.save(any(StudentEntity.class))).thenReturn(mockedStudent);
 
-        when(mockedStudent.getName()).thenReturn("Dhruva");
+        when(mockedStudent.getName()).thenReturn(studentName);
+        when(mockedSubject.getName()).thenReturn(subjectName);
 
         StudentDTO studentDTO = studentService.assignStudentToSubject(1L, 1L);
 
         assertThat(studentDTO).isNotNull();
-        assertThat(studentDTO.getName()).isEqualTo("Dhruva");
+        assertThat(studentDTO.getName()).isEqualTo(studentName);
         assertThat(studentDTO.getSubjects()).isNotNull();
         assertThat(studentDTO.getSubjects().isEmpty()).isFalse();
-        assertThat(studentDTO.getSubjects().contains(mockedSubjectDTO));
+        assertThat(studentDTO.getSubjects().stream().findFirst().get().getName()).isEqualTo(subjectName);
+        verify(mockedSubjectRepository, atLeastOnce()).findById(1L);
+        verify(mockedStudentRepository, atLeastOnce()).findById(1L);
+        verify(mockedStudentRepository, atLeastOnce()).save(any());
     }
 
     @Test
@@ -109,6 +113,7 @@ class StudentServiceImplTest {
         StudentDTO studentDTO = studentService.findStudentByName(mockedStudentEntity.getName());
 
         assertThat(studentDTO.getName()).isEqualTo(mockedStudentDTO.getName());
+        verify(mockedStudentRepository, atLeastOnce()).findByName(studentName);
     }
 
     @Test
@@ -119,6 +124,8 @@ class StudentServiceImplTest {
         Assertions.assertThatThrownBy(() -> studentService.findStudentByName(mockedStudentDTO.getName()))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Student not found with the name: " + mockedStudentDTO.getName());
+
+        verify(mockedStudentRepository, atLeastOnce()).findByName(mockedStudentDTO.getName());
     }
 
     @Test
@@ -130,6 +137,7 @@ class StudentServiceImplTest {
 
         assertThat(studentDTOList).isNotNull();
         assertThat(studentDTOList.getFirst().getName()).isEqualTo(mockedStudentDTO.getName());
+        verify(mockedStudentRepository, atLeastOnce()).findAll();
     }
 
     @Test
@@ -140,8 +148,7 @@ class StudentServiceImplTest {
         List<StudentDTO> studentDTOList = studentService.getAllStudents();
 
         assertThat(studentDTOList).isEmpty();
-
-
+        verify(mockedStudentRepository, atLeastOnce()).findAll();
     }
 
     @Test
@@ -155,6 +162,8 @@ class StudentServiceImplTest {
         assertThat(studentDTO).isNotNull();
         assertThat(studentDTO.getId()).isEqualTo(1L);
         assertThat(studentDTO.getName()).isEqualTo(mockedStudentDTO.getName());
+        verify(mockedStudentRepository, atLeastOnce()).findById(1L);
+        verify(mockedStudentRepository, atLeastOnce()).existsById(1L);
     }
 
     @Test
@@ -165,6 +174,8 @@ class StudentServiceImplTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Student is not available with the id: 1");
 
+        verify(mockedStudentRepository, atLeastOnce()).existsById(1L);
+        verify(mockedStudentRepository, never()).findById(anyLong());
     }
 
     @Test
@@ -176,5 +187,6 @@ class StudentServiceImplTest {
         assertThat(studentDTO).isNotNull();
         assertThat(studentDTO.getId()).isEqualTo(mockedStudentEntity.getId());
         assertThat(studentDTO.getName()).isEqualTo(mockedStudentDTO.getName());
+        verify(mockedStudentRepository, atLeastOnce()).save(mockedStudentEntity);
     }
 }
