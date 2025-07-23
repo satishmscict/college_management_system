@@ -54,6 +54,25 @@ class ProfessorControllerIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
+    void testSaveProfessor_whenProfessorDataInValid_thenFailure() {
+        ProfessorDTO professorDTO = ProfessorDTO.builder()
+                .name("")
+                .build();
+        webTestClient.post()
+                .uri("/api/v1/professor")
+                .bodyValue(professorDTO)
+                .exchange()
+                .expectStatus().is4xxClientError()
+                .expectBody()
+                .jsonPath("$.data").isEqualTo(null)
+                .jsonPath("$.error.httpStatus").isEqualTo("BAD_REQUEST")
+                .jsonPath("$.error.message").isEqualTo("Input validation failed.")
+                .jsonPath("$.error.errorList.length()").isEqualTo(1)
+                .jsonPath("$.error.errorList[0]").isEqualTo("Professor name is required.")
+        ;
+    }
+
+    @Test
     void testGetProfessorById_whenProfessorExist_thenSuccess() {
 
         ProfessorEntity professor = professorRepository.save(createMockProfessor("Arpit"));
@@ -77,5 +96,17 @@ class ProfessorControllerIntegrationTest extends BaseIntegrationTest {
                 .expectBody()
                 .jsonPath("$.error.httpStatus").isEqualTo("NOT_FOUND")
                 .jsonPath("$.error.message").isEqualTo("Professor not found with the id: 101");
+    }
+
+    @Test
+    void testGetProfessorById_whenUriIsInvalid_thenThrowException() {
+
+        webTestClient.get()
+                .uri("/api/v1/professordfd/{professorId}", 10L)
+                .exchange()
+                .expectStatus().is5xxServerError()
+                .expectBody()
+                .jsonPath("$.error.httpStatus").isEqualTo("INTERNAL_SERVER_ERROR")
+                .jsonPath("$.error.message").isEqualTo("No static resource api/v1/professordfd/10.");
     }
 }
