@@ -42,10 +42,10 @@ class StudentServiceImplTest {
     private SubjectRepository mockedSubjectRepository;
 
     @Spy
-    private ModelMapper mockedModelMapper;
+    private ModelMapper modelMapper;
 
     @Spy
-    private ValidationUtils mockedValidationUtils;
+    private ValidationUtils validationUtils;
 
     @InjectMocks
     private StudentServiceImpl studentService;
@@ -62,7 +62,7 @@ class StudentServiceImplTest {
                 .build();
 
 
-        mockedStudentDTO = mockedModelMapper.map(mockedStudentEntity, StudentDTO.class);
+        mockedStudentDTO = modelMapper.map(mockedStudentEntity, StudentDTO.class);
 
         mockedStudentRepository.deleteAll();
     }

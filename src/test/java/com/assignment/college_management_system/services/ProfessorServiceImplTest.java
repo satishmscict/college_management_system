@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 class ProfessorServiceImplTest {
 
     @Spy
-    private ModelMapper mockedModelMapper;
+    private ModelMapper modelMapper;
 
     @Mock
     private ProfessorRepository mockedProfessorRepository;
@@ -43,7 +43,7 @@ class ProfessorServiceImplTest {
     private StudentRepository mockedStudentRepository;
 
     @Spy
-    private ValidationUtils mockedValidationUtils;
+    private ValidationUtils validationUtils;
 
     @InjectMocks
     private ProfessorServiceImpl professorService;
@@ -57,7 +57,7 @@ class ProfessorServiceImplTest {
                 .id(1L)
                 .name("Arpit")
                 .build();
-        mockedProfessorDTO = mockedModelMapper.map(mockedProfessorEntity, ProfessorDTO.class);
+        mockedProfessorDTO = modelMapper.map(mockedProfessorEntity, ProfessorDTO.class);
     }
 
     @Test

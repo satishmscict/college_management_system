@@ -21,7 +21,7 @@ class StudentRepositoryTest {
     @Autowired
     private StudentRepository studentRepository;
 
-    StudentEntity mockedStudentEntity;
+    private StudentEntity mockedStudentEntity;
 
     @BeforeEach
     void setup(){

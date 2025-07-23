@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 class SubjectServiceImplTest {
 
     @Spy
-    private ModelMapper mockedModelMapper;
+    private ModelMapper modelMapper;
 
     @Mock
     private ProfessorRepository mockedProfessorRepository;
@@ -56,7 +56,7 @@ class SubjectServiceImplTest {
                 .name("DBMS")
                 .build();
 
-        mockedSubjecTDto = mockedModelMapper.map(mockedSubjectEntity, SubjectDTO.class);
+        mockedSubjecTDto = modelMapper.map(mockedSubjectEntity, SubjectDTO.class);
     }
 
     @Test
