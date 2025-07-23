@@ -1,32 +1,13 @@
 package com.assignment.college_management_system.controllers;
 
-import com.assignment.college_management_system.JpaTestContainerConfiguration;
 import com.assignment.college_management_system.dtos.StudentDTO;
 import com.assignment.college_management_system.entities.StudentEntity;
 import com.assignment.college_management_system.entities.SubjectEntity;
-import com.assignment.college_management_system.repositories.StudentRepository;
-import com.assignment.college_management_system.repositories.SubjectRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
-@AutoConfigureWebTestClient(timeout = "100000")
-@Import(JpaTestContainerConfiguration.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class StudentControllerTest {
 
-    @Autowired
-    private WebTestClient webTestClient;
-
-    @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
-    private SubjectRepository subjectRepository;
+class StudentControllerIntegrationTest extends BaseIntegrationTest {
 
     private StudentEntity mockedStudentEntity;
 
@@ -36,29 +17,43 @@ class StudentControllerTest {
 
     @BeforeEach
     void setup() {
-        mockedStudentEntity = StudentEntity.builder()
-                // .id(1L)
-                .name("Dhruva")
-                .build();
+        mockedStudentEntity = createMockStudent("Dhruva");
+
         mockedStudentDTO = StudentDTO.builder()
-                //.id(1L)
                 .name("Dhruva")
                 .build();
 
-        mockedsSubjectEntity = SubjectEntity.builder()
-                .name("DBMS")
-                .build();
-
-        studentRepository.deleteAll();
-        subjectRepository.deleteAll();
+        mockedsSubjectEntity = createMockSubject("DBMS");
     }
 
     @Test
     void getAllStudents() {
+        StudentEntity studentEntity = studentRepository.save(mockedStudentEntity);
+
+        webTestClient.get()
+                .uri("/api/v1/students")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.data.length()").isEqualTo(1)
+                .jsonPath("$.data[0].id").isEqualTo(studentEntity.getId().intValue())
+                .jsonPath("$.data[0].name").isEqualTo(studentEntity.getName());
+
+        // Hit API and print the result.
+        //        webTestClient.get()
+//                .uri("/api/v1/students")
+//                .exchange()
+//                .expectStatus().isOk()
+//                .expectBody(String.class)
+//                .consumeWith(response -> {
+//                    System.out.println("Response: " + response.getResponseBody());
+//                });
+
     }
 
     @Test
     void testGetStudentById_whenStudentIsExist_thenReturnSuccess() {
+
         StudentEntity studentEntity = studentRepository.save(mockedStudentEntity);
 
         webTestClient.get()
@@ -107,7 +102,6 @@ class StudentControllerTest {
 
     @Test
     void testSaveStudent_whenStudentDataIsValid_thenSuccess() {
-
 //        webTestClient.post()
 //                .uri("/api/v1/students")
 //                .bodyValue(mockedStudentDTO)
@@ -127,7 +121,8 @@ class StudentControllerTest {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody()
-                .jsonPath("$.data.id").isEqualTo(1L)
+                .jsonPath("$.data.id").exists()
+                .jsonPath("$.data.id").isNumber()
                 .jsonPath("$.data.name").isEqualTo(mockedStudentEntity.getName());
     }
 
@@ -145,6 +140,23 @@ class StudentControllerTest {
                 .jsonPath("$.data.name").isEqualTo("Dhruva")
                 .jsonPath("$.data.subjects[0].id").isEqualTo(subjectEntity.getId())
                 .jsonPath("$.data.subjects[0].name").isEqualTo("DBMS");
+
+        // Added this data to understand mapping.
+        String actualResponse = """
+                {
+                    "data": {
+                        "id": 1,
+                        "name": "Dhruva",
+                        "subjects": [
+                            {
+                                "id": 1,
+                                "name": "DBMS"
+                            }
+                        ]
+                    },
+                    "error": null,
+                    "localDateTime": "23-07-2025 10:06:31"
+                }""";
     }
 
     @Test
@@ -159,6 +171,7 @@ class StudentControllerTest {
                 .jsonPath("$.error.message").isEqualTo("Subject not available with the id: 10")
                 .jsonPath("$.error.httpStatus").isEqualTo("NOT_FOUND");
 
+        // Added this data to understand mapping.
         String actualResponse = """
                 {
                     "data": null,

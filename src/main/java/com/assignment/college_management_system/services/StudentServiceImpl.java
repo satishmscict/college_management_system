@@ -7,6 +7,7 @@ import com.assignment.college_management_system.exceptions.ResourceNotFoundExcep
 import com.assignment.college_management_system.repositories.StudentRepository;
 import com.assignment.college_management_system.repositories.SubjectRepository;
 import com.assignment.college_management_system.utils.ValidationUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class StudentServiceImpl implements StudentService {
     private final ModelMapper modelMapper;
@@ -58,12 +60,15 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDTO> getAllStudents() {
-        return studentRepository
+        log.debug("Started get all students");
+        List<StudentDTO> studentDTOList = studentRepository
                 .findAll()
                 .stream()
                 .map(studentEntity -> modelMapper.map(studentEntity, StudentDTO.class))
                 .collect(Collectors.toList());
 
+        log.debug("Completed fetching the students, and {} student records found.", studentDTOList.size());
+        return studentDTOList;
     }
 
     @Override
