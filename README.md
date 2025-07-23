@@ -47,7 +47,11 @@
 
 ![img.png](img.png)
 
-## Reference links
+### **Code coverage report**
+
+![img_1.png](img_1.png)
+
+### Reference links
 
 - https://docs.spring.io/spring-boot/reference/actuator/endpoints.html (Actuator official documentation.)
 - https://springdoc.org/#google_vignette (Swagger & Open api)
