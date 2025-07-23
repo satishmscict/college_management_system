@@ -99,6 +99,17 @@
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
 					<version>0.8.13</version>
+
+                    <configuration>
+                        <excludes>
+                            <!-- Exclude all classes in the 'entity' package -->
+                            <exclude>com/assignment/college_management_system/entities/**/*</exclude>
+                            <!-- Exclude a specific entity class -->
+                            <!--                            <exclude>com/example/yourpackage/entity/MyEntity.class</exclude>-->
+                            <!-- Exclude the application class -->
+                            <exclude>**/*CollegeManagementSystemApplication.class</exclude>
+                        </excludes>
+                    </configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

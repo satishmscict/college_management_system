@@ -46,3 +46,12 @@
 ### ✅ **Database Diagram**
 
 ![img.png](img.png)
+
+## Reference links
+
+- https://docs.spring.io/spring-boot/reference/actuator/endpoints.html (Actuator official documentation.)
+- https://springdoc.org/#google_vignette (Swagger & Open api)
+- https://stackoverflow.com/questions/27799419/maven-jacoco-configuration-exclude-classes-packages-from-report-not-working (
+  Jacoco custom configuration)
+- https://mbahardogan.medium.com/the-integration-test-with-spring-boot-4893d8151278 (Integration tests)
+- https://www.baeldung.com/jacoco-report-exclude (Exclude classes form code the coverage)
