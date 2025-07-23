@@ -4,11 +4,12 @@ import com.assignment.college_management_system.dtos.AdmissionRecordDTO;
 import com.assignment.college_management_system.services.AdmissionRecordService;
 import com.assignment.college_management_system.services.StudentService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("admission-record/v1")
+@RequestMapping("/api/v1/admission-record")
 public class AdmissionRecordController {
 
     AdmissionRecordService admissionRecordService;
@@ -34,6 +35,6 @@ public class AdmissionRecordController {
 
     @PostMapping
     public ResponseEntity<AdmissionRecordDTO> saveAdmissionRecord(@RequestBody @Valid AdmissionRecordDTO admissionRecordDTO) {
-        return ResponseEntity.ok(admissionRecordService.saveAdmissionRecord(admissionRecordDTO));
+        return new ResponseEntity<>(admissionRecordService.saveAdmissionRecord(admissionRecordDTO), HttpStatus.CREATED);
     }
 }

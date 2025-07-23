@@ -3,11 +3,12 @@ package com.assignment.college_management_system.controllers;
 import com.assignment.college_management_system.dtos.SubjectDTO;
 import com.assignment.college_management_system.services.SubjectService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/subjects/v1")
+@RequestMapping("/api/v1/subjects")
 public class SubjectController {
 
     private final SubjectService subjectService;
@@ -18,7 +19,7 @@ public class SubjectController {
 
     @PostMapping
     public ResponseEntity<SubjectDTO> saveSubject(@RequestBody @Valid SubjectDTO subjectDTO) {
-        return ResponseEntity.ok(subjectService.saveSubject(subjectDTO));
+        return new ResponseEntity<>(subjectService.saveSubject(subjectDTO), HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/{subjectId}")
