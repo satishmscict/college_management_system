@@ -3,7 +3,6 @@ package com.assignment.college_management_system.controllers;
 import com.assignment.college_management_system.dtos.AdmissionRecordDTO;
 import com.assignment.college_management_system.services.AdmissionRecordService;
 import com.assignment.college_management_system.services.StudentService;
-import com.assignment.college_management_system.services.StudentServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,7 @@ public class AdmissionRecordController {
     AdmissionRecordService admissionRecordService;
     StudentService studentService;
 
-    public AdmissionRecordController(AdmissionRecordService admissionRecordService, StudentServiceImpl studentService) {
+    public AdmissionRecordController(AdmissionRecordService admissionRecordService, StudentService studentService) {
         this.admissionRecordService = admissionRecordService;
         this.studentService = studentService;
     }

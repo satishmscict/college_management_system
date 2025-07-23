@@ -51,7 +51,6 @@ class AdmissionRecordServiceImplTest {
 
     @BeforeEach
     void setup() {
-
         mockedAdmissionRecordEntity = AdmissionRecordEntity.builder()
                 .id(1L)
                 .fees(30000.00)
@@ -105,6 +104,7 @@ class AdmissionRecordServiceImplTest {
 
         assertThat(admissionRecordDTO.getId()).isEqualTo(1L);
         assertThat(admissionRecordDTO.getFees()).isEqualTo(25000.00);
+
         verify(mockedStudentRepository, atLeastOnce()).findById(1L);
         verify(mockedAdmissionRecordRepository, atLeastOnce()).findById(1L);
         verify(mockedAdmissionRecordRepository, atLeastOnce()).save(any());
@@ -122,7 +122,6 @@ class AdmissionRecordServiceImplTest {
 
         verify(mockedAdmissionRecordRepository, atLeastOnce()).existsById(1L);
         verify(mockedAdmissionRecordRepository, atLeastOnce()).findById(any());
-
     }
 
     @Test
@@ -135,7 +134,6 @@ class AdmissionRecordServiceImplTest {
 
         verify(mockedAdmissionRecordRepository, atLeastOnce()).existsById(1L);
         verify(mockedAdmissionRecordRepository, never()).findById(any());
-
     }
 
     @Test
@@ -146,7 +144,7 @@ class AdmissionRecordServiceImplTest {
 
         assertThat(admissionRecordDTO.getId()).isEqualTo(1L);
         assertThat(admissionRecordDTO.getFees()).isEqualTo(30000.00);
-        verify(mockedAdmissionRecordRepository, atLeastOnce()).save(any());
 
+        verify(mockedAdmissionRecordRepository, atLeastOnce()).save(any());
     }
 }

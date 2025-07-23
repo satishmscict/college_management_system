@@ -88,12 +88,12 @@
     </dependencies>
 
     <build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.8.13</version>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.13</version>
 
                     <configuration>
                         <excludes>
@@ -105,9 +105,9 @@
                             <exclude>**/*CollegeManagementSystemApplication.class</exclude>
                         </excludes>
                     </configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

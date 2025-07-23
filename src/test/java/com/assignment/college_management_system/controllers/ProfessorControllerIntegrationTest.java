@@ -58,6 +58,7 @@ class ProfessorControllerIntegrationTest extends BaseIntegrationTest {
         ProfessorDTO professorDTO = ProfessorDTO.builder()
                 .name("")
                 .build();
+
         webTestClient.post()
                 .uri("/api/v1/professor")
                 .bodyValue(professorDTO)
@@ -74,7 +75,6 @@ class ProfessorControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void testGetProfessorById_whenProfessorExist_thenSuccess() {
-
         ProfessorEntity professor = professorRepository.save(createMockProfessor("Arpit"));
 
         webTestClient.get()
@@ -88,7 +88,6 @@ class ProfessorControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void testGetProfessorById_whenProfessorDoesNotExistAndValid_thenFailure() {
-
         webTestClient.get()
                 .uri("/api/v1/professor/{professorId}", 101L)
                 .exchange()
@@ -100,7 +99,6 @@ class ProfessorControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void testGetProfessorById_whenUriIsInvalid_thenThrowException() {
-
         webTestClient.get()
                 .uri("/api/v1/professordfd/{professorId}", 10L)
                 .exchange()

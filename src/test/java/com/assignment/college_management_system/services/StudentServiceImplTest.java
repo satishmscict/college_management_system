@@ -2,7 +2,6 @@ package com.assignment.college_management_system.services;
 
 import com.assignment.college_management_system.JpaTestContainerConfiguration;
 import com.assignment.college_management_system.dtos.StudentDTO;
-import com.assignment.college_management_system.dtos.SubjectDTO;
 import com.assignment.college_management_system.entities.StudentEntity;
 import com.assignment.college_management_system.entities.SubjectEntity;
 import com.assignment.college_management_system.exceptions.ResourceNotFoundException;
@@ -21,7 +20,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -49,18 +51,11 @@ class StudentServiceImplTest {
     private StudentServiceImpl studentService;
 
     private StudentEntity mockedStudentEntity;
-    private SubjectEntity mockedSubjectEntity;
 
     private StudentDTO mockedStudentDTO;
-    private SubjectDTO mockedSubjectDTO;
 
     @BeforeEach
     void setUp() {
-        mockedSubjectEntity = SubjectEntity.builder()
-                .id(1L)
-                .name("DBMS")
-                .build();
-
         mockedStudentEntity = StudentEntity.builder()
                 .id(1L)
                 .name("Dhruva")
@@ -68,7 +63,6 @@ class StudentServiceImplTest {
 
 
         mockedStudentDTO = mockedModelMapper.map(mockedStudentEntity, StudentDTO.class);
-        mockedSubjectDTO = mockedModelMapper.map(mockedSubjectEntity, SubjectDTO.class);
 
         mockedStudentRepository.deleteAll();
     }
@@ -99,6 +93,7 @@ class StudentServiceImplTest {
         assertThat(studentDTO.getSubjects()).isNotNull();
         assertThat(studentDTO.getSubjects().isEmpty()).isFalse();
         assertThat(studentDTO.getSubjects().stream().findFirst().get().getName()).isEqualTo(subjectName);
+
         verify(mockedSubjectRepository, atLeastOnce()).findById(1L);
         verify(mockedStudentRepository, atLeastOnce()).findById(1L);
         verify(mockedStudentRepository, atLeastOnce()).save(any());
@@ -113,6 +108,7 @@ class StudentServiceImplTest {
         StudentDTO studentDTO = studentService.findStudentByName(mockedStudentEntity.getName());
 
         assertThat(studentDTO.getName()).isEqualTo(mockedStudentDTO.getName());
+
         verify(mockedStudentRepository, atLeastOnce()).findByName(studentName);
     }
 
@@ -137,6 +133,7 @@ class StudentServiceImplTest {
 
         assertThat(studentDTOList).isNotNull();
         assertThat(studentDTOList.getFirst().getName()).isEqualTo(mockedStudentDTO.getName());
+
         verify(mockedStudentRepository, atLeastOnce()).findAll();
     }
 
@@ -148,6 +145,7 @@ class StudentServiceImplTest {
         List<StudentDTO> studentDTOList = studentService.getAllStudents();
 
         assertThat(studentDTOList).isEmpty();
+
         verify(mockedStudentRepository, atLeastOnce()).findAll();
     }
 
@@ -162,6 +160,7 @@ class StudentServiceImplTest {
         assertThat(studentDTO).isNotNull();
         assertThat(studentDTO.getId()).isEqualTo(1L);
         assertThat(studentDTO.getName()).isEqualTo(mockedStudentDTO.getName());
+
         verify(mockedStudentRepository, atLeastOnce()).findById(1L);
         verify(mockedStudentRepository, atLeastOnce()).existsById(1L);
     }
@@ -187,6 +186,7 @@ class StudentServiceImplTest {
         assertThat(studentDTO).isNotNull();
         assertThat(studentDTO.getId()).isEqualTo(mockedStudentEntity.getId());
         assertThat(studentDTO.getName()).isEqualTo(mockedStudentDTO.getName());
+
         verify(mockedStudentRepository, atLeastOnce()).save(mockedStudentEntity);
     }
 }

@@ -5,7 +5,6 @@ import com.assignment.college_management_system.entities.ProfessorEntity;
 import com.assignment.college_management_system.entities.SubjectEntity;
 import org.junit.jupiter.api.Test;
 
-
 class SubjectControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
@@ -49,7 +48,6 @@ class SubjectControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void testAssignSubjectToProfessor_whenSubjectAndProfessorExist_thenSuccess() {
-
         SubjectEntity subjectEntity = subjectRepository.save(createMockSubject("Java"));
         ProfessorEntity professor = professorRepository.save(createMockProfessor("Arpit"));
 

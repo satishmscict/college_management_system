@@ -26,7 +26,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
 @Import(JpaTestContainerConfiguration.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
@@ -60,7 +59,6 @@ class SubjectServiceImplTest {
         mockedSubjecTDto = mockedModelMapper.map(mockedSubjectEntity, SubjectDTO.class);
     }
 
-
     @Test
     void testAssignSubjectToProfessor_whenSubjectAndProfessorIsValid_thenSaveAndReturnSubjectWithProfessor() {
         ProfessorEntity professor = mock(ProfessorEntity.class);
@@ -90,6 +88,7 @@ class SubjectServiceImplTest {
 
         assertThat(subjectDTO.getId()).isEqualTo(mockedSubjectEntity.getId());
         assertThat(subjectDTO.getName()).isEqualTo(mockedSubjectEntity.getName());
+
         verify(mockedSubjectRepository, atLeastOnce()).findById(any());
         verify(mockedSubjectRepository, atLeastOnce()).findById(1L);
     }

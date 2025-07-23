@@ -6,7 +6,6 @@ import com.assignment.college_management_system.entities.SubjectEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 class StudentControllerIntegrationTest extends BaseIntegrationTest {
 
     private StudentEntity mockedStudentEntity;
@@ -53,7 +52,6 @@ class StudentControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void testGetStudentById_whenStudentIsExist_thenReturnSuccess() {
-
         StudentEntity studentEntity = studentRepository.save(mockedStudentEntity);
 
         webTestClient.get()
@@ -102,19 +100,6 @@ class StudentControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void testSaveStudent_whenStudentDataIsValid_thenSuccess() {
-//        webTestClient.post()
-//                .uri("/api/v1/students")
-//                .bodyValue(mockedStudentDTO)
-//                .exchange()
-//                .expectStatus().isCreated()
-//                .expectBody(new ParameterizedTypeReference<ApiResponse<StudentDTO>>() {})
-//                .consumeWith(response -> {
-//                    ApiResponse<StudentDTO> apiResponse = response.getResponseBody();
-//                    assertNotNull(apiResponse);
-//                    assertEquals(mockedStudentEntity.getName(), apiResponse.getData().getName());
-//                    assertEquals(mockedStudentEntity.getId(), apiResponse.getData().getId());
-//                });
-
         webTestClient.post()
                 .uri("/api/v1/students")
                 .bodyValue(mockedStudentDTO)
