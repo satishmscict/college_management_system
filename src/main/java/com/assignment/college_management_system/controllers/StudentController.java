@@ -4,6 +4,7 @@ import com.assignment.college_management_system.dtos.StudentDTO;
 import com.assignment.college_management_system.services.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<StudentDTO>> getAllStudents(){
-    return ResponseEntity.ok(studentService.getAllStudents());
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @GetMapping(path = "/studentId/{studentId}")
@@ -33,7 +34,7 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentDTO> saveStudent(@RequestBody @Valid StudentDTO studentDTO) {
-        return ResponseEntity.ok(studentService.saveStudent(studentDTO));
+        return new ResponseEntity<>(studentService.saveStudent(studentDTO), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/studentId/{studentId}/subjectId/{subjectId}")
