@@ -94,7 +94,7 @@ class StudentControllerIntegrationTest extends BaseIntegrationTest {
     @Test
     void testGetStudentByName_whenStudentNotExist_thenFail() {
         webTestClient.get()
-                .uri("/api/v1/students/studentName/{studentName}", "abcd")
+                .uri("/api/v1/students/studentName/{studentName}", "unknown")
                 .exchange()
                 .expectStatus().is4xxClientError()
                 .expectBody();

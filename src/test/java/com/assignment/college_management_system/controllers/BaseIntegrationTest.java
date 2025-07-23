@@ -1,8 +1,10 @@
 package com.assignment.college_management_system.controllers;
 
 import com.assignment.college_management_system.JpaTestContainerConfiguration;
+import com.assignment.college_management_system.entities.ProfessorEntity;
 import com.assignment.college_management_system.entities.StudentEntity;
 import com.assignment.college_management_system.entities.SubjectEntity;
+import com.assignment.college_management_system.repositories.ProfessorRepository;
 import com.assignment.college_management_system.repositories.StudentRepository;
 import com.assignment.college_management_system.repositories.SubjectRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +20,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 public class BaseIntegrationTest {
 
     @Autowired
+    protected ProfessorRepository professorRepository;
+
+    @Autowired
     protected StudentRepository studentRepository;
 
     @Autowired
@@ -30,6 +35,14 @@ public class BaseIntegrationTest {
     void cleanDatabase() {
         studentRepository.deleteAll();
         subjectRepository.deleteAll();
+    }
+
+    protected ProfessorEntity createMockProfessor(String professorName) {
+        return professorRepository.save(
+                ProfessorEntity.builder()
+                        .name(professorName)
+                        .build()
+        );
     }
 
     protected StudentEntity createMockStudent(String name) {
