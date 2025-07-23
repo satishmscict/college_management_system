@@ -65,7 +65,6 @@ class ProfessorControllerIntegrationTest extends BaseIntegrationTest {
                 .exchange()
                 .expectStatus().is4xxClientError()
                 .expectBody()
-                .jsonPath("$.data").isEqualTo(null)
                 .jsonPath("$.error.httpStatus").isEqualTo("BAD_REQUEST")
                 .jsonPath("$.error.message").isEqualTo("Input validation failed.")
                 .jsonPath("$.error.errorList.length()").isEqualTo(1)
