@@ -60,3 +60,4 @@
 - https://mbahardogan.medium.com/the-integration-test-with-spring-boot-4893d8151278 (Integration tests)
 - https://www.baeldung.com/jacoco-report-exclude (Exclude classes form code the coverage)
 - https://dzone.com/articles/build-a-spring-boot-app-with-flyway-and-postgres (Flyway implementation)
+- https://www.geeksforgeeks.org/sql/sql-alter-rename/ (Most used SQL queries for migration)
