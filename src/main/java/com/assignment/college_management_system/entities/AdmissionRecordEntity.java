@@ -1,21 +1,12 @@
 package com.assignment.college_management_system.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "admission_record")
