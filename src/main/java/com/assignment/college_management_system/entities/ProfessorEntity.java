@@ -1,21 +1,8 @@
 package com.assignment.college_management_system.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,16 +23,18 @@ public class ProfessorEntity {
 
     private String name;
 
+    private Integer age;
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        ProfessorEntity that = (ProfessorEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+        ProfessorEntity professor = (ProfessorEntity) o;
+        return Objects.equals(id, professor.id) && Objects.equals(name, professor.name) && Objects.equals(age, professor.age);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, age);
     }
 
     @ManyToMany(cascade = CascadeType.ALL)
