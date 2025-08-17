@@ -58,4 +58,6 @@
 - https://stackoverflow.com/questions/27799419/maven-jacoco-configuration-exclude-classes-packages-from-report-not-working (
   Jacoco custom configuration)
 - https://mbahardogan.medium.com/the-integration-test-with-spring-boot-4893d8151278 (Integration tests)
-- https://www.baeldung.com/jacoco-report-exclude (Exclude classes form code the coverage)
+- https://www.baeldung.com/jacoco-report-exclude (Exclude classes form the code coverage)
+- https://dzone.com/articles/build-a-spring-boot-app-with-flyway-and-postgres (Flyway implementation)
+- https://www.geeksforgeeks.org/sql/sql-alter-rename/ (Most commonly used SQL queries for database migrations)
